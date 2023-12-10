@@ -1,0 +1,23 @@
+version: '3'
+
+services:
+
+  mongo_node_portfolio:
+    image: mongo
+    container_name: mongo_node_portfolio
+    ports:
+      - ${DB_PORT}:27017
+    volumes:
+      - ./data:/data/db
+
+  node:
+    build: .
+    container_name: node_portfolio
+    # restart: always
+    ports:
+      - ${APP_PORT}:3000
+    depends_on:
+      - mongo_node_portfolio
+    volumes:
+      - .:/app
+      - /app/node_modules

@@ -1,0 +1,92 @@
+import contactmeController from "./contactmeController.js";
+
+
+const  getAllContacts = async (req, res) =>{
+    try {
+        const errorMessage = req.query.error;
+        const [error, contacts] = await contactmeController.getAllContacts();
+        if (error) {
+            return res.status(500).json({ error: error });
+        }
+        res.status(200).json({ contacts, errorMessage, session: req.session });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: "Internal server error. Please try again later." });
+    }
+}
+
+const getContactsById = async (req, res) => {
+    const id = req.params.id;
+    try {
+        const [error, contact] = await contactmeController.getContactsById(id);
+        if (error) {
+            return res.status(404).json({ error: error });
+        }
+        res.status(200).json({ contact });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: "Internal server error. Please try again later." });
+    }
+}
+
+
+const updateContact = async (req,res) =>{
+
+    const { id, firstName, lastName, email, phoneNumber, topic, message, answered, conctactDate } = req.body;
+
+    try {
+        const [error, contact] = await contactmeController.updateContact(id, firstName, lastName, email, phoneNumber, topic, message, answered, conctactDate);
+
+        if (error) {
+            return res.status(404).json({ error: "No record found with that ID." });
+        }
+
+        return res.status(200).json({ success: true, contact });
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({ error: "Internal server error. Please try again later." });
+    }
+}
+
+const removeContact = async (req, res) => {
+    const { id } = req.body;
+
+    try {
+        const [error, contact] = await contactmeController.removeContact(id);
+
+        if (error) {
+            return res.status(404).json({ error: "No record found with that ID." });
+        }
+
+        return res.status(200).json({ success: true, contact });
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({ error: "Internal server error. Please try again later." });
+    }
+};
+
+
+const createContact = async (req, res) => {
+    const { firstName, lastName, email, phoneNumber, topic, message } = req.body;
+   
+
+    try {
+       
+            const [error, contact] = await contactmeController.createContact(firstName, lastName, email, phoneNumber, topic, message);
+            return res.status(201).json({ contact });
+       
+    } catch (error) {
+        console.error(error);
+        return res.status(400).json({ error: error.message });
+    }
+};
+
+
+
+export default {
+    getAllContacts,
+    getContactsById,
+    updateContact,
+    removeContact, 
+    createContact
+};
