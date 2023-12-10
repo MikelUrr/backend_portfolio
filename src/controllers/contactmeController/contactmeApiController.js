@@ -68,18 +68,45 @@ const removeContact = async (req, res) => {
 
 const createContact = async (req, res) => {
     const { firstName, lastName, email, phoneNumber, topic, message } = req.body;
-   
+   console.log(req.body)
 
     try {
        
             const [error, contact] = await contactmeController.createContact(firstName, lastName, email, phoneNumber, topic, message);
-            return res.status(201).json({ contact });
+            const apiUrl = 'http://localhost:3669/enviar'; 
+            const apiResponse = await fetch(apiUrl, {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({
+                firstName,
+                lastName,
+                email,
+                phoneNumber,
+                topic,
+                message,
+              }),
+              credentials: 'include',
+            });
+        
+            if (apiResponse.ok) {
+              const responseData = await apiResponse.json();
+              console.log(responseData)
+              return res.status(201).json({ contact: responseData });
+            } else {
+              const errorMessage = await apiResponse.text();
+              throw new Error(`Error en la llamada a la API: ${apiResponse.status} - ${errorMessage}`);
+            }
        
-    } catch (error) {
-        console.error(error);
-        return res.status(400).json({ error: error.message });
-    }
-};
+            
+          } catch (error) {
+            console.error(error);
+            return res.status(400).json({ error: error.message });
+          }
+        };
+        
+
 
 
 

@@ -23,8 +23,11 @@ const app = express();
  app.use(session(sessionConfig));
 
 
-app.use(cors());
-
+ app.use(cors({
+    origin: ['http://localhost:5173', 'http://localhost:3669'],
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+    credentials: true,
+  }));
 
 app.use(express.static("img"));
 
