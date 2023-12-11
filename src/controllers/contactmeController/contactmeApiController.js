@@ -68,12 +68,12 @@ const removeContact = async (req, res) => {
 
 const createContact = async (req, res) => {
     const { firstName, lastName, email, phoneNumber, topic, message } = req.body;
-   console.log(req.body)
+   console.log(firstName,lastName,email,phoneNumber,topic,message)
 
     try {
        
             const [error, contact] = await contactmeController.createContact(firstName, lastName, email, phoneNumber, topic, message);
-            const apiUrl = 'http://localhost:3669/enviar'; 
+            const apiUrl = 'http://node_telegram:3000/enviar'; 
             const apiResponse = await fetch(apiUrl, {
               method: 'POST',
               headers: {
@@ -86,11 +86,12 @@ const createContact = async (req, res) => {
                 phoneNumber,
                 topic,
                 message,
+                timestamp: Date.now(), 
               }),
               credentials: 'include',
             });
             
-        
+        console.log(apiResponse)
             if (apiResponse.ok) {
               const responseData = await apiResponse.json();
               console.log(responseData)

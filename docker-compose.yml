@@ -21,3 +21,14 @@ services:
     volumes:
       - .:/app
       - /app/node_modules
+
+  node_telegram:
+    build: ./bot_telegram
+    container_name: node_telegram
+    # restart: always
+    ports:
+      - ${BOT_PORT}:3000
+   
+    volumes:
+      - ./bot_telegram:/app
+      - /app/node_modules
