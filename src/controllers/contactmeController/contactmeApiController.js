@@ -101,7 +101,6 @@ const createContact = async (req, res) => {
               const errorMessage = await apiResponse.text();
               throw new Error(`Error en la llamada a la API: ${apiResponse.status} - ${errorMessage}`);
             }
-       if (con)
              */
             if (contact){
                 return res.status(201).json({ contact: contact });
