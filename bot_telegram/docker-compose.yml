@@ -1,0 +1,16 @@
+version: '3'
+
+services:
+
+
+
+  node:
+    build: .
+    container_name: node_telegram
+    # restart: always
+    ports:
+      - ${APP_PORT}:3000
+   
+    volumes:
+      - .:/app
+      - /app/node_modules

@@ -1,0 +1,45 @@
+version: '3'
+
+services:
+  mongo_node_portfolio:
+    image: mongo
+    container_name: mongo_node_portfolio
+    volumes:
+      - ./data:/data/db
+    networks:
+      - portfolio-network
+
+  node:
+    build: .  # Se añadió la ruta al contexto de la construcción
+    container_name: node_portfolio1
+    ports:
+      - ${APP_PORT}:3000
+    depends_on:
+      - mongo_node_portfolio
+    environment:
+      - VIRTUAL_HOST=portfolionodejs.mikelurrestarazu.com
+      - LETSENCRYPT_HOST=portfolionodejs.mikelurrestarazu.com
+      - LETSENCRYPT_EMAIL=admin@mikelurrestarazu.com
+    volumes:
+      - .:/app  # Se corrigió el punto en la ruta
+      - /app/node_modules  # Se corrigió el punto en la ruta
+    networks:
+      - portfolio-network
+      - nginx-proxy
+
+  node_telegram:
+    build: ./bot_telegram  # Se añadió la ruta al contexto de la construcción
+    container_name: node_telegram
+    ports:
+      - ${BOT_PORT}:3000
+    volumes:
+      - .:/app  # Se corrigió el punto en la ruta
+      - /bot_telegram/app/node_modules  # Se corrigió el punto en la ruta
+    networks:
+      - portfolio-network
+
+networks:
+  portfolio-network:
+    name: portfolio-network
+  nginx-proxy:
+    external: true
