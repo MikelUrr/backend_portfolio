@@ -21,11 +21,11 @@ const getContactsById = async (id) =>{
     }
 }
 
-const updateContact = async (id, firstName, lastName, email, phoneNumber, topic,message,answered,conctactDate,followup,closed) =>{
+const updateContact = async (_id, firstName, lastName, email, phoneNumber, topic,message,answered,conctactDate,followup,closed) =>{
     try {
-        const contact = await ContactmeModel.findById(id);
+        const contact = await ContactmeModel.findById(_id);
 
-        if (!entry) {
+        if (!contact) {
             const error = "No record found with that ID.";
             return [error, null];
         }

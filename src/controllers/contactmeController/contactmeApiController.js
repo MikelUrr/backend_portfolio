@@ -32,10 +32,10 @@ const getContactsById = async (req, res) => {
 
 const updateContact = async (req,res) =>{
 
-    const { id, firstName, lastName, email, phoneNumber, topic, message, answered, conctactDate,followup,closed } = req.body;
+    const { _id, firstName, lastName, email, phoneNumber, topic, message, answered, conctactDate,followup,closed } = req.body;
 
     try {
-        const [error, contact] = await contactmeController.updateContact(id, firstName, lastName, email, phoneNumber, topic, message, answered, conctactDate,followup,closed);
+        const [error, contact] = await contactmeController.updateContact(_id, firstName, lastName, email, phoneNumber, topic, message, answered, conctactDate,followup,closed);
 
         if (error) {
             return res.status(404).json({ error: "No record found with that ID." });
@@ -49,7 +49,8 @@ const updateContact = async (req,res) =>{
 }
 
 const removeContact = async (req, res) => {
-    const { id } = req.body;
+    const { id } = req.params;
+   
 
     try {
         const [error, contact] = await contactmeController.removeContact(id);

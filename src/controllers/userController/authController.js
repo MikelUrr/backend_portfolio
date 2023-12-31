@@ -1,5 +1,5 @@
 import Jwt from "jsonwebtoken";
-import UserModel from "./../models/userModel.js";
+import UserModel from "./../../models/userModel.js";
 import bcrypt from "bcrypt";
 import dotenv from "dotenv";
 
@@ -51,8 +51,15 @@ const login = async (req, res) => {
 };
 
 const logout = async (req, res) => {
-    res.clearCookie("token");
-    res.status(200).send("Logged out");
+    try {
+        res.clearCookie('token', { expires: new Date(0), httpOnly: true });
+console.log('Token cleared');
+res.status(200).json("Logged out");
+console.log('Response sent: Logged out');
+    } catch (error) {
+        console.error('Error during logout:', error);
+        res.status(500).json("Internal Server Error");
+    }
 };
 
 export default { login, logout };
