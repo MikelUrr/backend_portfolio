@@ -21,7 +21,7 @@ const getContactsById = async (id) =>{
     }
 }
 
-const updateContact = async (id, firstName, lastName, email, phoneNumber, topic,message,answered,conctactDate) =>{
+const updateContact = async (id, firstName, lastName, email, phoneNumber, topic,message,answered,conctactDate,followup,closed ) =>{
     try {
         const contact = await ContactmeModel.findById(id);
 
@@ -38,7 +38,8 @@ const updateContact = async (id, firstName, lastName, email, phoneNumber, topic,
         contact.message = message || contact.message;
         contact.answered = answered || contact.answered;
         contact.conctactDate=conctactDate || contact.conctactDate
-
+        contact.followup=followup || contact.followup
+        contact.closed=closed || contact.closed
         await contact.save();
 
         return [null, contact];

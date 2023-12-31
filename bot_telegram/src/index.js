@@ -15,8 +15,7 @@ app.use(cors({
   methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
   credentials: true,
 }));
-
-const token = '6615779832:AAHWrqmWsylq7KorbgYfJ1WeXN9zCaWUck8'; 
+const token = process.env.TELEGRAM_BOT_TOKEN;
 const bot = new TelegramBot(token, { polling: true });
 
 let chatId;

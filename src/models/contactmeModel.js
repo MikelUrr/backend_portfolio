@@ -36,6 +36,15 @@ const contactmeSchema = new mongoose.Schema({
       type: Date,
       default: Date.now
   },
+  followup: {
+    type: String,
+     
+  },
+  closed:{
+    type: Boolean,
+        default: false,
+  }
+
     
   });
   

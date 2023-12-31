@@ -12,4 +12,8 @@ router.get("/",(req,res)=> {
     contactmeApiController.getAllContacts(req, res);
 })
 
+router.put('/', (req, res) => {
+  contactmeApiController.updateContact(req, res);
+});
+
   export default router;
