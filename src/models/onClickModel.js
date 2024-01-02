@@ -1,28 +1,23 @@
-import mongoose from "mongoose";
+
 import mongodb from "./../config/mongodb.js";
 
+import mongoose, { Schema } from "mongoose"; 
 
-
-const onClickSchema = new mongoose.Schema({
+const onClickSchema = new Schema({
     time: {
-      type: String,
-      
+        type: String,
     },
     clickedUrl: {
-      type: String,
-      
+        type: String,
     },
     userinfo: {
-      type: String,
-      
+        type: Schema.Types.Mixed,
     },
-
     componentInfo: {
-      type: String,
-      
+        type: String,
     }
-  });
-  
-  const onClickModel = mongoose.model('Contactme', onClickSchema);
-  
- export default onClickModel;
+});
+
+const onClickModel = mongoose.model('onclick', onClickSchema);
+
+export default onClickModel;

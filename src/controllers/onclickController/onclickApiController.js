@@ -3,7 +3,7 @@ import onclickController from "./onclickController.js";
 const getAllClicks = async (req, res) => {
     try {
         const errorMessage = req.query.error;
-        const [error, clicks] = await contactmeController.getAllContacts();
+        const [error, clicks] = await onclickController.getAllClicks();
         if (error) {
             return res.status(500).json({ error: error });
         }
@@ -72,7 +72,7 @@ const createClick = async (req, res) => {
         if (error) {
             return res.status(500).json({ error: error });
         }
-        res.status(200).json({ click, errorMessage, session: req.session });
+        res.status(200).json({success: true, click});
     } catch (error) {
         console.error(error);
         res.status(500).json({ error: "Internal server error. Please try again later." });
