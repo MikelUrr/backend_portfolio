@@ -10,7 +10,7 @@ router.post('/', (req, res) => {
 
 
 router.get("/",isAuthenticatedApi,(req,res)=> {
-  onclickApiController.getAllClicks (req, res);
+  onclickApiController.getclickstats (req, res);
 })
 
 export default router;
